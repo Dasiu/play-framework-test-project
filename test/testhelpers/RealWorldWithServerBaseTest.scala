@@ -1,6 +1,7 @@
 package testhelpers
 
 import articles.config.ArticleTestComponents
+import authentication.config.AuthenticationTestComponents
 import config.ExampleComponents
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.play.PlaySpec
@@ -11,6 +12,7 @@ import play.api.http.Status
 import play.api.libs.ws.WSClient
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import slick.dbio.DBIO
+import users.config.UserTestComponents
 
 trait RealWorldWithServerBaseTest extends PlaySpec
   with OneServerPerTestWithComponents
@@ -34,7 +36,10 @@ trait RealWorldWithServerBaseTest extends PlaySpec
     implicit lazy val testWsClient: WSClient = wsClient
   }
 
-  class AppWithTestComponents extends RealWorldWithTestConfig with ArticleTestComponents
+  class AppWithTestComponents extends RealWorldWithTestConfig
+    with ArticleTestComponents
+    with AuthenticationTestComponents
+    with UserTestComponents
 
   override def components: RealWorldWithTestConfig = {
     new RealWorldWithTestConfig
